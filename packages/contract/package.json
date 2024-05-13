@@ -1,0 +1,16 @@
+{
+  "name": "@demo/contract",
+  "scripts": {
+    "compile": "hardhat compile",
+    "deploy": "hardhat ignition deploy ./ignition/modules/Demo.ts"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-foundry": "^1.1.1",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.3"
+  },
+  "dependencies": {
+    "forge-std": "^1.1.2",
+    "solmate": "^6.2.0"
+  }
+}
