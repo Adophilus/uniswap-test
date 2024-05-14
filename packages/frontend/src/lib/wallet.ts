@@ -1,7 +1,13 @@
-import { BrowserProvider, type Eip1193Provider } from "ethers"
+import * as ethers from "ethers"
+
 class MetamaskNotInstalledError extends Error { }
 
-export const getWallet = async () => {
+export type Wallet = {
+  provider: ethers.providers.Provider
+  signer: ethers.Signer
+}
+
+export const getWallet = async (): Promise<Wallet> => {
   const inBrowserProvider = (window as any).ethereum
 
   if (!inBrowserProvider) {
@@ -9,15 +15,12 @@ export const getWallet = async () => {
     throw new MetamaskNotInstalledError()
   }
 
-  let signer = null;
+  const provider = new ethers.providers.Web3Provider(inBrowserProvider)
 
-  let provider;
-  provider = new BrowserProvider(inBrowserProvider)
-  signer = await provider.getSigner();
+  await provider.send("eth_requestAccounts", []);
 
   return {
-    rawProvider: inBrowserProvider as Eip1193Provider,
     provider,
-    signer
+    signer: provider.getSigner()
   }
 }

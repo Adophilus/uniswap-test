@@ -9,12 +9,16 @@
   "scripts": {
     "frontend:dev": "dotenv -- bun --filter @demo/frontend dev",
     "contract:compile": "dotenv -- bun --filter @demo/contract compile",
-    "contract:deploy": "dotenv -- bun --filter @demo/contract deploy"
+    "contract:deploy": "dotenv -- bun --filter @demo/contract deploy",
+    "cmd:env": "dotenv -- "
   },
   "workspaces": [
     "./packages/*"
   ],
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@uniswap/permit2-sdk": "^1.2.1"
   }
 }

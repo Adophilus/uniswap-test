@@ -2,7 +2,8 @@
   "name": "@demo/contract",
   "scripts": {
     "compile": "hardhat compile",
-    "deploy": "hardhat ignition deploy ./ignition/modules/Demo.ts"
+    "deploy": "hardhat ignition deploy ./ignition/modules/Demo.ts",
+    "verify": "hardhat ignition verify"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-foundry": "^1.1.1",
@@ -10,7 +11,7 @@
     "hardhat": "^2.22.3"
   },
   "dependencies": {
-    "forge-std": "^1.1.2",
-    "solmate": "^6.2.0"
+    "@uniswap/permit2": "github:uniswap/permit2",
+    "permit2": "github:uniswap/permit2"
   }
 }

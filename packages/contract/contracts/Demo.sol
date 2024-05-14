@@ -1,6 +1,8 @@
 import {IAllowanceTransfer} from "permit2/src/interfaces/IAllowanceTransfer.sol";
 
 contract Demo {
+    error InvalidSpender(address spender);
+
     IAllowanceTransfer public immutable permit2;
 
     constructor(address _permit2) {
@@ -8,10 +10,10 @@ contract Demo {
     }
 
     function permitThroughPermit2(
-        PermitSingle calldata permitSingle,
+        IAllowanceTransfer.PermitSingle calldata permitSingle,
         bytes calldata signature
     ) public {
-        if (permitSingle.spender != address(this)) revert InvalidSpender();
+        if (permitSingle.spender != address(this)) revert InvalidSpender(permitSingle.spender);
         permit2.permit(msg.sender, permitSingle, signature);
     }
 
@@ -24,7 +26,7 @@ contract Demo {
     }
 
    function permitAndTransferToOther(IAllowanceTransfer.PermitSingle calldata permitSingle, bytes calldata signature, uint160 amount, address recipient) public {
-       if (permitSingle.spender != address(this)) revert InvalidSpender();
+       if (permitSingle.spender != address(this)) revert InvalidSpender(permitSingle.spender);
        permit2.permit(msg.sender, permitSingle, signature);
        permit2.transferFrom(msg.sender, recipient, amount, permitSingle.details.token);
    }
