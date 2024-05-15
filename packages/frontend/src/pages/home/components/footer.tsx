@@ -7,6 +7,7 @@ export const Footer = () => {
       <a
         href="https://github.com/Adophilus/uniswap-test"
         rel="noreferrer noopener"
+        target="_blank"
       >
         <GithubIcon />
       </a>
