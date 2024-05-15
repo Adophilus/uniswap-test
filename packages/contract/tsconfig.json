@@ -9,7 +9,6 @@
 		"skipLibCheck": true,
 		"resolveJsonModule": true
 	},
-	"include": ["artifacts/**/*.json", "typechain-types"],
 	"references": [
 		{
 			"path": "../../tsconfig.json"
