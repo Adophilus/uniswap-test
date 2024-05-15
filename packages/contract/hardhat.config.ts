@@ -17,6 +17,9 @@ const config: HardhatUserConfig = {
   etherscan: {
     apiKey: etherscanApiKey,
   },
+  typechain: {
+    target: "ethers-v5",
+  },
 };
 
 export default config;

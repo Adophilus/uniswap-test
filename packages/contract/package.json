@@ -2,6 +2,7 @@
   "name": "@demo/contract",
   "scripts": {
     "compile": "hardhat compile",
+    "clean": "hardhat clean",
     "deploy": "hardhat ignition deploy ./ignition/modules/Demo.ts",
     "verify": "hardhat ignition verify"
   },
@@ -11,6 +12,7 @@
     "hardhat": "^2.22.3"
   },
   "dependencies": {
+    "@typechain/ethers-v5": "^11.1.2",
     "@uniswap/permit2": "github:uniswap/permit2",
     "permit2": "github:uniswap/permit2"
   }

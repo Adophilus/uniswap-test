@@ -11,6 +11,7 @@
 		"frontend:build": "dotenv -- bun --filter @demo/frontend build",
 		"frontend:dev": "dotenv -- bun --filter @demo/frontend dev",
 		"contract:compile": "dotenv -- bun --filter @demo/contract compile",
+		"contract:clean": "dotenv -- bun --filter @demo/contract clean",
 		"contract:deploy": "dotenv -- bun --filter @demo/contract deploy",
 		"cmd:env": "dotenv -- "
 	},
