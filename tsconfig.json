@@ -29,8 +29,5 @@
     "skipLibCheck": true,
     "noFallthroughCasesInSwitch": true,
     "noPropertyAccessFromIndexSignature": false
-  },
-  "include": [
-    "./**/*.{ts,js,json}"
-  ]
+  }
 }
