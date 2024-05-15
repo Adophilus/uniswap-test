@@ -154,7 +154,6 @@ const TransferForm: FunctionComponent<{
 		const rawAmount =
 			e.currentTarget.querySelector<HTMLInputElement>("input")!.value ?? "0";
 
-		console.log(tokenAddress);
 		let decimals = tokenAddress === USDT_TOKEN_ADDRESS ? 6 : 18;
 		let amount = BigNumber.from(rawAmount).mul(
 			BigNumber.from(10).pow(decimals),
