@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "composite": true,
     // Enable latest features
     "lib": [
       "ESNext",
@@ -23,7 +24,6 @@
     // Bundler mode
     "moduleResolution": "bundler",
     "outDir": "build",
-    "noEmit": true,
     // Best practices
     "strict": true,
     "skipLibCheck": true,
