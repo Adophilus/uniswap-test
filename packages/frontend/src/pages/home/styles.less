@@ -15,15 +15,17 @@ main {
       display: grid;
     }
 
-    select,
-    button,
-    input[type=number] {
+    .form-input {
       border-radius: 1em;
       font-size: 1.2rem;
       padding: 0.5em;
       background-color: #000000;
       color: #ffffff;
       font-weight: 500;
+    }
+
+    .form-input:disabled {
+      opacity: 0.8;
     }
   }
 }
