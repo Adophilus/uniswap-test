@@ -1,11 +1,12 @@
 import type { Wallet } from "./wallet";
 import type { Demo } from "@demo/contract/typechain-types";
-import DemoAbi from "@demo/contract/artifacts/contracts/Demo.sol/Demo.json" assert {
-  type: "json",
-};
 import { Contract, type BigNumberish, type ContractTransaction } from "ethers";
 
 const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
+
+const CONTRACT_ABI = [
+  "function transferToOther(address token, uint160 amount, address recipient)",
+];
 
 export const transferTo = async (
   wallet: Wallet,
@@ -15,7 +16,7 @@ export const transferTo = async (
 ) => {
   const contract = new Contract(
     CONTRACT_ADDRESS,
-    DemoAbi.abi,
+    CONTRACT_ABI,
     wallet.signer,
   ) as unknown as Demo;
   return contract.transferToOther(token, amount, recipient);
