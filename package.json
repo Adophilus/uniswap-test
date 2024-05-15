@@ -7,7 +7,7 @@
 		"dotenv-cli": "^7.4.2"
 	},
 	"scripts": {
-		"build": "dotenv -- bash -c 'bun run contract:compile & bun run frontend:build'",
+		"build": "dotenv -- bash -c 'bun run contract:compile && bun run frontend:build'",
 		"frontend:build": "dotenv -- bun --filter @demo/frontend build",
 		"frontend:dev": "dotenv -- bun --filter @demo/frontend dev",
 		"contract:compile": "dotenv -- bun --filter @demo/contract compile",
