@@ -1,19 +1,20 @@
 {
-  "name": "@demo/contract",
-  "scripts": {
-    "compile": "hardhat compile",
-    "clean": "hardhat clean",
-    "deploy": "hardhat ignition deploy ./ignition/modules/Demo.ts",
-    "verify": "hardhat ignition verify"
-  },
-  "devDependencies": {
-    "@nomicfoundation/hardhat-foundry": "^1.1.1",
-    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
-    "hardhat": "^2.22.3"
-  },
-  "dependencies": {
-    "@typechain/ethers-v5": "^11.1.2",
-    "@uniswap/permit2": "github:uniswap/permit2",
-    "permit2": "github:uniswap/permit2"
-  }
+	"name": "@demo/contract",
+	"scripts": {
+		"compile": "hardhat compile",
+		"clean": "hardhat clean",
+		"deploy": "hardhat ignition deploy ./ignition/modules/Demo.ts",
+		"verify": "hardhat ignition verify"
+	},
+	"devDependencies": {
+		"@nomicfoundation/hardhat-foundry": "^1.1.1",
+		"@nomicfoundation/hardhat-toolbox": "^5.0.0",
+		"hardhat": "^2.22.3"
+	},
+	"dependencies": {
+		"ethers": "5.7.2",
+		"@typechain/ethers-v5": "^11.1.2",
+		"@uniswap/permit2": "github:uniswap/permit2",
+		"permit2": "github:uniswap/permit2"
+	}
 }

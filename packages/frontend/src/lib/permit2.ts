@@ -7,7 +7,7 @@ import {
 } from "@uniswap/permit2-sdk";
 import type { Wallet } from "./wallet";
 import { Contract } from "ethers";
-import { signTypedData } from "@uniswap/conedison/provider/index";
+import { signTypedData } from "@uniswap/conedison/provider/index.js";
 
 export type Permit = {
   permit: PermitSingle;
@@ -55,7 +55,12 @@ export const getAllowance = async (
     11155111,
   );
 
-  const signature = await signTypedData(domain, types, values);
+  const signature = await signTypedData(
+    wallet.signer as any,
+    domain,
+    types,
+    values,
+  );
 
   return signature;
 };
@@ -100,7 +105,7 @@ export const signPermit = async (
 
   return {
     signature: (await signTypedData(
-      wallet.signer,
+      wallet.signer as any,
       domain,
       types,
       values,
