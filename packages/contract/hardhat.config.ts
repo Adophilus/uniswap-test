@@ -9,14 +9,14 @@ const etherscanApiKey = process.env.ETHERSCAN_API_KEY as string;
 const config: HardhatUserConfig = {
   solidity: "0.8.24",
   networks:
-    process.env.NODE_ENV === "production"
-      ? {}
-      : {
+    process.env.NODE_ENV === "development"
+      ? {
         sepolia: {
           url: sepoliaRpcUrl,
           accounts: [sepoliaPrivateKey],
         },
-      },
+      }
+      : {},
   etherscan: {
     apiKey: etherscanApiKey,
   },
