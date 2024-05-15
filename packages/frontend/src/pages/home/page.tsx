@@ -1,9 +1,11 @@
 import hooks from "@demo/frontend/hooks";
 import "./styles.less";
-import { useState, type FormEvent, type FunctionComponent } from "react";
+import { useState } from "react";
+import type { FormEvent, FunctionComponent } from "react";
 import lib from "@demo/frontend/lib";
 import type { Permit, Wallet } from "@demo/frontend/types";
-import { BigNumber, utils } from "ethers";
+import { BigNumber } from "ethers";
+import { Footer } from "./components/footer";
 
 const USDT_TOKEN_ADDRESS = import.meta.env.VITE_USDT_CONTRACT_ADDRESS;
 const DAI_TOKEN_ADDRESS = import.meta.env.VITE_DAI_CONTRACT_ADDRESS;
@@ -201,7 +203,7 @@ const fetchCachedPermit = () => {
 const cachePermit = (permit: Permit) =>
 	window.localStorage.setItem(CACHED_PERMIT_KEY, JSON.stringify(permit));
 
-export default function() {
+export default function HomePage() {
 	const [tokenAddress, setTokenAddress] = useState(USDT_TOKEN_ADDRESS);
 	const [permit, _setPermit] = useState<Permit | undefined>(
 		fetchCachedPermit() ?? undefined,
@@ -228,6 +230,7 @@ export default function() {
 						</button>
 					</div>
 				</form>
+				<Footer />
 			</main>
 		);
 
@@ -252,6 +255,7 @@ export default function() {
 				) : null}
 				<TransferForm wallet={wallet} tokenAddress={tokenAddress} />
 			</div>
+			<Footer />
 		</main>
 	);
 }
