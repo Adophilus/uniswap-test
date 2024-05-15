@@ -1,18 +1,17 @@
-import { useEffect, useState } from "react"
-import lib from "../lib"
+import { useEffect, useState } from "react";
+import lib from "../lib";
 
-type Web3 = Awaited<ReturnType<typeof lib.wallet.getWallet>>
+type Wallet = Awaited<ReturnType<typeof lib.wallet.getWallet>>;
 
 export const useGetWallet = () => {
-  const [web3, setWeb3] = useState<Web3 | null>(null)
+	const [wallet, setWallet] = useState<Wallet | null>(null);
 
-  const getWallet = async () => {
-    setWeb3(await lib.wallet.getWallet())
-  }
+	const getWallet = async () => {
+		setWallet(await lib.wallet.getWallet());
+	};
 
-  useEffect(() => {
-    getWallet()
-  }, [])
-
-  return web3
-}
+	return {
+		connect: () => getWallet(),
+		wallet,
+	};
+};
