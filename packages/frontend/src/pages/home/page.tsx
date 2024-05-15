@@ -185,6 +185,12 @@ const TransferForm: FunctionComponent<{
 	);
 };
 
+const Disclaimer = () => (
+	<div>
+		<header className="disclaimer">Be sure to use sepolia network</header>
+	</div>
+);
+
 const CACHED_PERMIT_KEY = "permit";
 
 const fetchCachedPermit = () => {
@@ -223,6 +229,7 @@ export default function HomePage() {
 	if (!wallet)
 		return (
 			<main>
+				<Disclaimer />
 				<form className="form connect-form" onSubmit={onSubmit}>
 					<div>
 						<button className="form-input" type="submit">
@@ -236,6 +243,7 @@ export default function HomePage() {
 
 	return (
 		<main>
+			<Disclaimer />
 			<TokenForm setTokenAddress={setTokenAddress} />
 			<FaucetForm wallet={wallet} tokenAddress={tokenAddress} />
 			<ApproveForm wallet={wallet} tokenAddress={tokenAddress} />
