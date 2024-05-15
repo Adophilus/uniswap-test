@@ -4,7 +4,7 @@
 		"module": "commonjs",
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
-		"noEmit": true,
+		"outDir": "build",
 		"strict": true,
 		"skipLibCheck": true,
 		"resolveJsonModule": true
