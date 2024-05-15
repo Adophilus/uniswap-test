@@ -34,8 +34,6 @@
     "noPropertyAccessFromIndexSignature": false
   },
   "extends": [
-    {
-      "paths": "./packages/contract/tsconfig.json"
-    }
+    "./packages/contract/tsconfig.json"
   ]
 }
