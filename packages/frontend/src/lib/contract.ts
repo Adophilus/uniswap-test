@@ -3,7 +3,7 @@ import type { Demo } from "@demo/contract/typechain-types";
 import DemoAbi from "@demo/contract/artifacts/contracts/Demo.sol/Demo.json" assert {
   type: "json",
 };
-import { Contract, type ContractTransaction } from "ethers";
+import { Contract, type BigNumberish, type ContractTransaction } from "ethers";
 
 const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
 
@@ -11,14 +11,13 @@ export const transferTo = async (
   wallet: Wallet,
   token: string,
   recipient: string,
-  signature: string,
-  amount: number,
+  amount: BigNumberish,
 ) => {
   const contract = new Contract(
     CONTRACT_ADDRESS,
     DemoAbi.abi,
     wallet.signer,
-  ) as Contract & Demo;
+  ) as unknown as Demo;
   return contract.transferToOther(token, amount, recipient);
 };
 
@@ -29,10 +28,10 @@ export const faucet = async (wallet: Wallet, tokenAddress: string) => {
   let address: string;
   let abi: string[];
 
-  let token: "DAI" | "USDT" = "DAI";
-  if (tokenAddress === import.meta.env.VITE_DAI_CONTRACT_ADDRESS) token = "DAI";
-  else if (tokenAddress === import.meta.env.VITE_USDT_CONTRACT_ADDRESS)
-    token = "USDT";
+  let token =
+    tokenAddress === import.meta.env.VITE_DAI_CONTRACT_ADDRESS
+      ? ("DAI" as const)
+      : ("USDT" as const);
 
   switch (token) {
     case "DAI": {

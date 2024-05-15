@@ -9,9 +9,29 @@ import type { Wallet } from "./wallet";
 import { Contract } from "ethers";
 import { signTypedData } from "@uniswap/conedison/provider/index";
 
-function toDeadline(expiration: number): number {
+export type Permit = {
+  permit: PermitSingle;
+  signature: string;
+};
+
+const toDeadline = (expiration: number): number => {
   return Math.floor((Date.now() + expiration) / 1000);
-}
+};
+
+const createPermitSingle = (
+  spender: string,
+  token: string,
+  nonce: number,
+): PermitSingle => ({
+  details: {
+    token,
+    amount: MaxAllowanceTransferAmount,
+    expiration: toDeadline(1000 * 60 * 60 * 24 * 30),
+    nonce,
+  },
+  spender,
+  sigDeadline: toDeadline(1000 * 60 * 60 * 30),
+});
 
 export const getAllowance = async (
   wallet: Wallet,
@@ -53,7 +73,7 @@ export const approve = async (wallet: Wallet, token: string) => {
   );
 };
 
-export const permit = async (
+export const signPermit = async (
   wallet: Wallet,
   spender: string,
   token: string,
@@ -63,31 +83,13 @@ export const permit = async (
     PERMIT2_ADDRESS,
   );
   const account = await wallet.signer.getAddress();
-  /**
-   * Get the current allowance amount, expiration, and nonce using the AllowanceProvider.
-   * This is the same data that would be used to create a PermitSingle object.
-   * You can check permitAmount or expiration on this data to determine whether you need to create a new permit.
-   */
   const {
     // amount: permitAmount,
     // expiration,
     nonce,
   } = await allowanceProvider.getAllowanceData(token, account, spender);
 
-  /**
-   * Create a PermitSingle object with the maximum allowance amount, and a deadline 30 days in the future.
-   */
-  const permitSingle: PermitSingle = {
-    details: {
-      token,
-      amount: MaxAllowanceTransferAmount,
-      expiration: toDeadline(/* 30 days= */ 1000 * 60 * 60 * 24 * 30),
-      nonce,
-    },
-    spender,
-    sigDeadline: toDeadline(/* 30 mins= */ 1000 * 60 * 60 * 30),
-  };
-
+  const permitSingle = createPermitSingle(spender, token, nonce);
   const network = await wallet.provider.getNetwork();
 
   const { domain, types, values } = AllowanceTransfer.getPermitData(
@@ -96,26 +98,29 @@ export const permit = async (
     network.chainId,
   );
 
-  const signature: string = await signTypedData(
-    wallet.signer,
-    domain,
-    types,
-    values,
-  );
+  return {
+    signature: (await signTypedData(
+      wallet.signer,
+      domain,
+      types,
+      values,
+    )) as string,
+    permit: permitSingle,
+  };
+};
 
-  const permitAbi = [
-    "function permit(address owner, tuple(tuple(address token,uint160 amount,uint48 expiration,uint48 nonce) details, address spender,uint256 sigDeadline) permitSingle, bytes calldata signature)",
-    "function transferFrom(address from, address to, uint160 amount, address token)",
-  ];
+const PERMIT_ABI = [
+  "function permit(address owner, tuple(tuple(address token,uint160 amount,uint48 expiration,uint48 nonce) details, address spender,uint256 sigDeadline) permitSingle, bytes calldata signature)",
+];
+
+export const permit = async (wallet: Wallet, permit: Permit) => {
+  const account = await wallet.signer.getAddress();
 
   const permitContract = new Contract(
     PERMIT2_ADDRESS,
-    permitAbi,
+    PERMIT_ABI,
     wallet.signer,
   );
 
-  return {
-    tx: await permitContract.permit(account, permitSingle, signature),
-    signature,
-  };
+  return permitContract.permit(account, permit.permit, permit.signature);
 };
